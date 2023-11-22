@@ -19,6 +19,8 @@ mkdir -p "$temp_dir"
 # Calculate DPI based on output dimensions and desired quality
 dpis=$(convert -ping "$input_pdf" -format "%x\n" info:)
 dpi=`echo "${dpis}" | head -1` # first line only
+dpi=$((dpi)) # to number
+dpi=$(printf "%.2f" $(echo "$dpi * 1.2" | bc -l)) # ish quality is slightly worse than macbook
 
 # standard sheet of paper
 # output_width=8.5
