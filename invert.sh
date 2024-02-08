@@ -13,11 +13,10 @@ input_pdf="$1"
 output_pdf="$1-inverted.pdf"
 
 # Temporary directory to store image files
-temp_dir="temp_images"
+temp_dir="$HOME/temp_images"  # Use user's home directory for temporary files
 
 # Create a temporary directory if it doesn't exist
 mkdir -p "$temp_dir"
-
 
 # Calculate DPI based on output dimensions and desired quality
 dpis=$(convert -ping "$input_pdf" -format "%x\n" info:)
@@ -39,6 +38,6 @@ mogrify -negate "$temp_dir"/*.jpg
 # Convert the inverted images back to a PDF
 convert "$temp_dir"/*.jpg "$output_pdf"
 
-
 # Clean up temporary files
 rm -r "$temp_dir"
+
