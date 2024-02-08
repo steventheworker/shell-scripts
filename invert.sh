@@ -3,6 +3,9 @@ if [ -z "$1" ]; then
    exit 1
 fi
 
+# config
+quality=1.67
+
 # Input PDF file
 input_pdf="$1"
 
@@ -19,6 +22,7 @@ mkdir -p "$temp_dir"
 # Calculate DPI based on output dimensions and desired quality
 dpis=$(convert -ping "$input_pdf" -format "%x\n" info:)
 dpi=`echo "${dpis}" | head -1` # first line only
+dpi=$(printf "%.2f" $(echo "$dpi*1.2*$quality" | bc -l)) #make slightly higher quality (1.0 = 120%)
 
 # standard sheet of paper
 # output_width=8.5
